@@ -1,6 +1,7 @@
 import styled from 'styled-components'
 
 export const Container = styled.div`
+    width: 100vw;
     height: 100vh;
     display: flex;
     flex-direction: column;
@@ -65,3 +66,37 @@ export const Button = styled.button`
         opacity: 0.6;
     }
 `
+
+export const User = styled.li`
+    display: flex;
+    flex-direction: column;
+    gap: 30px;
+    width: 342px;
+    height: 100px;
+    background: rgba(255, 255, 255, 0.25);
+    border-radius: 14px;
+    margin-top: 20px;
+    
+    p{
+        color: #FFFFFF;
+        font-size: 20px;
+        padding-left: 20px;
+        padding-top: 10px;
+    }
+
+    .cliente{
+        font-weight: 700;
+        font-size: 21px;
+        line-height: 21px;
+    }
+
+    button {
+        position: relative;
+        left: 140px;
+        bottom: 90px;
+        background:none;
+        border: none;
+        cursor: pointer;
+    }
+`
+
