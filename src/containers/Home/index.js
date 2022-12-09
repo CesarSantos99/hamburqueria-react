@@ -1,33 +1,41 @@
 import React, { useState, useRef } from "react";
-import Logo from "./assets/principal.png"
-import Lixaira from "./assets/lixeira.svg"
+import { useHistory } from "react-router-dom";
 
+import Logo from "../../assets/principal.png"
+
+import axios from "axios";
+
+import { H1 } from "../../components/Titulo/styles";
+import { Button } from "../../components/Button/styles";
 
 import {
   Container,
-  H1,
   ImagemPrincipal,
   ContainerInput,
   SubTitulo,
   Input,
-  Button,
-  User
 } from "./styles"
+
 
 function App() {
 
   const [comandas, setComandas] = useState([]) //react Hooks vai ajuda crir um estado
+  const history = useHistory()
   const inputPedido = useRef()
   const inputCliente = useRef()
 
 
-  function novaComanda() {
-    setComandas([...comandas, { id: Math.random(), pedido: inputPedido.current.value, cliente: inputCliente.current.value }])
-  } //... spread operat
+  async function novaComanda() {
 
-  function deleteComanda (userId) {
-    const apagaComanda = comandas.filter((user) => user.id !== userId)
-    setComandas(apagaComanda)
+    const { data: novaLista } = await axios.post("http://localhost:3001/comandas", {
+      pedido: inputPedido.current.value,
+      cliente: inputCliente.current.value
+    })
+
+    console.log(novaLista);
+    setComandas([...comandas, novaLista])
+
+    history.push("/comandas")
   }
 
 
@@ -49,18 +57,6 @@ function App() {
       </ContainerInput>
 
       <Button onClick={novaComanda}>Novo Pedido</Button>
-
-      <ul>
-        {comandas.map((user) => (
-          <User key={user.id}>
-            <p>{user.pedido}</p>
-            <p className="cliente">{user.cliente}</p>
-            <button onClick={() => deleteComanda(user.id)}>
-              <img alt="lixeira" src={Lixaira} />
-            </button>
-          </User>
-        ))}
-      </ul>
 
     </Container>
   )
